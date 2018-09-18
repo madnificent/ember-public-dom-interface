@@ -8,7 +8,9 @@ Ember APIs.
 
 The addon introduces a new block, publicInterface, which allows you to
 specify methods that can be called on the DOM element of the
-component.
+component.  The interface can be enabled by use of the `public-dom`
+mixin, or by the `@publicDom` decorator.  As an alternative to the
+publicInterface block, the @publicInterface annotation can be used.
 
 This experiment was suggested by @gossi.
 
@@ -27,16 +29,22 @@ Usage
 Import the mixin into your component and define the dom interface in
 the `publicInterface` property.
 
-An example is likely sufficient for describing this PoC addon.
-
-### Example
+An example is likely sufficient for describing this PoC addon.  We
+provide an example of all three definition forms which are equivalent
+in their use.
 
 An example consists of creating a component which has a public DOM
 interface.  This interface can then be called directly on the DOM
-element
+element.
 
-Create a component with a public dom interface.  We named ours
-`dom-hello-world`:
+Each of the examples create a component with a public dom interface.  We named ours
+`dom-hello-world`.
+
+### Example definition with mixin
+
+The first example uses the Mixin.  Import the mixin and apply it.  Set
+the properties on the publicInterface property, and you're good to go.
+
 
     import Component from '@ember/component';
     import PublicDomMixin from 'ember-public-dom-interface/mixins/public-dom';
@@ -53,8 +61,66 @@ Create a component with a public dom interface.  We named ours
           this.set("value", this.value + 1);
         }
       }
-
     });
+
+### Example definition with class decorator
+
+When using native classes, but still want to use the publicDom object,
+the `@publicDom` decorator can help you out.  Import the decorator,
+annotate the class and set the properties on the publicInterface
+property.  That's it.
+
+    import Component from '@ember/component';
+    import { publicDom } from 'ember-public-dom-interface/decorators';
+
+    @publicDom
+    export default class DomApiHelloWorld extends Component {
+      classNames = ["has-public-dom"]
+      value = 42
+
+      publicInterface = {
+        sayValue() {
+          console.log(this.value);
+        },
+        increaseValue() {
+          this.set("value", this.value + 1);
+        }
+      }
+    }
+
+### Example definition with only decorators
+
+If you don't want to put the publicInterface into a separate block,
+but would rather annotate the public methods, you can do so by
+importing the `@publicInterface` decorator and the `@publicDom`
+interface.
+
+Apply the `@publicDom` interface to your class.  Add the
+`@publicInterface` decorator above all methods that should be public,
+and you're good to go.  This form also allows you to expose computed
+properties in a read-only way.
+
+    import Component from '@ember/component';
+    import { publicInterface, publicDom } from 'ember-public-dom-interface/decorators';
+
+    @publicDom
+    export default class DomApiHelloWorld extends Component {
+      classNames = ["has-public-dom"]
+      value = 42
+
+      @publicInterface
+      sayValue() {
+        console.log(this.value);
+      }
+
+      @publicInterface
+      increaseValue() {
+        this.set("value", this.value + 1);
+      }
+    }
+
+
+### Example use
 
 Render the component somewhere in your application:
 
