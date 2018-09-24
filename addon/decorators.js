@@ -8,7 +8,7 @@ export function publicDom(target) {
     didInsertElement(){
       super.didInsertElement();
       for( let key in this.publicInterface ) {
-        let functor = publicInterface[key];
+        let functor = this.publicInterface[key];
         let self = this;
         let newMethod = function(){
           let args = arguments;
