@@ -14,6 +14,7 @@ export function publicDom(target) {
           let args = arguments;
           return run( () => functor.bind(self)(...args) );
         };
+        this.element[key] = newMethod;
       }
     }
   };
