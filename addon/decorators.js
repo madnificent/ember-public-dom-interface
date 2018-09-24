@@ -1,3 +1,4 @@
+import { run } from '@ember/runloop';
 /**
  * Decorator which publishes the publicInterface to the DOM element on
  * didInsertElement.
@@ -5,10 +6,15 @@
 export function publicDom(target) {
   return class extends target {
     didInsertElement(){
-      for( let key in this.publicInterface ) {
-        this.element[key] = this.publicInterface[key].bind(this);
-      }
       super.didInsertElement();
+      for( let key in this.publicInterface ) {
+        let functor = publicInterface[key];
+        let self = this;
+        let newMethod = function(){
+          let args = arguments;
+          return run( () => functor.bind(self)(...args) );
+        };
+      }
     }
   };
 }
