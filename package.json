@@ -1,13 +1,13 @@
 {
   "name": "ember-public-dom-interface",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Explicitly specify the public interface of a component and publishing it on the DOM in Ember",
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/madnificent/ember-public-dom-interface",
   "license": "MIT",
-  "author": "",
+  "author": "Aad Versteden <madnificent@gmail.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
