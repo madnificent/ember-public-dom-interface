@@ -1,6 +1,6 @@
 {
   "name": "ember-public-dom-interface",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Explicitly specify the public interface of a component and publishing it on the DOM in Ember",
   "keywords": [
     "ember-addon"
